@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>매물 상세 - 찬스부동산</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ================= 원본 스타일 및 기능 100% 유지 ================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans KR', sans-serif; color: #333; background-color: #fcfcfc; padding-bottom: 50px; }
+        a { text-decoration: none; color: inherit; }
+        :root { --chance-blue: #2980b9; --chance-dark: #2c3e50; }
+
+        header { background: white; padding: 15px 5%; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo img { height: 45px; }
+        .btn-home { font-weight: 700; color: #555; }
+
+        .container { max-width: 800px; margin: 30px auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        
+        .gallery-wrapper { position: relative; background: #000; border-bottom: 1px solid #eee; }
+        .img-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 500px; scrollbar-width: none; align-items: center; }
+        .img-container::-webkit-scrollbar { display: none; }
+        .img-item { flex: 0 0 100%; height: 100%; scroll-snap-align: start; display: flex; justify-content: center; align-items: center; }
+        .img-item img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.3); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; z-index: 20; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .nav-btn:hover { background: rgba(0, 0, 0, 0.7); }
+        .nav-btn.prev { left: 15px; } .nav-btn.next { right: 15px; }
+
+        .content { padding: 30px; }
+        .category-badge { display: inline-block; background: var(--chance-dark); color: white; padding: 5px 12px; border-radius: 5px; font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; }
+        .title { font-size: 1.8rem; font-weight: 900; margin-bottom: 15px; line-height: 1.3; }
+        .price { font-size: 1.6rem; color: var(--chance-blue); font-weight: 900; margin-bottom: 30px; border-bottom: 2px solid #f0f0f0; padding-bottom: 20px; }
+        
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; background: #f9f9f9; padding: 20px; border-radius: 10px; }
+        .info-item { font-size: 0.95rem; }
+        .info-item span { font-weight: 700; color: #555; display: inline-block; width: 85px; }
+
+        .desc-wrapper { position: relative; margin-bottom: 40px; }
+        .desc-content { 
+            line-height: 1.8; color: #444; max-height: 250px; overflow: hidden; 
+            white-space: pre-line; transition: max-height 0.5s ease; 
+            position: relative; z-index: 1; 
+            padding-bottom: 80px; 
+        }
+        .desc-wrapper.expanded .desc-content { max-height: 5000px; padding-bottom: 20px; }
+        
+        .desc-gradient { 
+            position: absolute; bottom: 50px; left: 0; width: 100%; height: 120px; 
+            background: linear-gradient(transparent, rgba(255,255,255,1) 85%); 
+            pointer-events: none; z-index: 2; 
+        }
+        .desc-wrapper.expanded .desc-gradient { display: none; }
+        
+        .more-btn { 
+            position: relative; z-index: 10; display: block; width: 100%; padding: 14px; 
+            margin-top: -30px; background: #ffffff !important; 
+            border: 1.5px solid var(--chance-blue); border-radius: 10px; 
+            color: var(--chance-blue); font-weight: 800; cursor: pointer; text-align: center;
+            box-shadow: 0 -5px 15px rgba(255,255,255,0.8);
+        }
+
+        #detail-map { width: 100%; height: 350px; border-radius: 12px; border: 1px solid #eee; margin-top: 30px; }
+        .blog-btn { display: block; width: 100%; text-align: center; background: #03c75a; color: white; padding: 15px; border-radius: 10px; font-weight: 700; margin-top: 20px; }
+
+        @media (max-width: 768px) {
+            header { position: relative; } 
+            .img-container { height: 300px; }
+            .info-grid { grid-template-columns: 1fr 1fr; padding: 15px; gap: 10px; }
+            .info-item { font-size: 0.85rem; }
+            .info-item span { width: 65px; }
+            .nav-btn { width: 35px; height: 35px; font-size: 1rem; }
+        }
+    </style>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=19b2a43b1cce86358e51d8af4ce55a6e&libraries=services"></script>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="index.html"><img src="logo.jpg" alt="찬스부동산"></a></div>
+        <a href="listings.html" class="btn-home"><i class="fa-solid fa-arrow-left"></i> 목록으로</a>
+    </header>
+    <div class="container" id="detail-container"></div>
+
+    <script>
+        function getParam(n){ return new URLSearchParams(window.location.search).get(n); }
+        
+        function getAllImages(s) {
+            if (!s) return ['bg.jpg'];
+            return s.replace(/(\r\n|\n|\r)/gm, "|").split("|").map(l => {
+                l = l.trim(); if(!l) return null;
+                if (l.includes('pstatic.net') || l.includes('blog.naver')) return l.split('?')[0] + '?type=w966';
+                return (l.startsWith('http') || l.startsWith('/images/')) ? l : null;
+            }).filter(l => l) || ['bg.jpg'];
+        }
+
+        function moveSlide(d) {
+            const c = document.querySelector('.img-container');
+            if(c) c.scrollBy({ left: d * c.clientWidth, behavior: 'smooth' });
+        }
+
+        function toggleDesc() {
+            const c = document.getElementById('desc-container');
+            const b = document.getElementById('more-toggle');
+            c.classList.toggle('expanded');
+            b.innerHTML = c.classList.contains('expanded') ? '간략히 보기 ^' : '상세 설명 더보기 v';
+        }
+
+        function initDetailMap(a, p) {
+            const m = new kakao.maps.Map(document.getElementById('detail-map'), { center: new kakao.maps.LatLng(36.504, 127.249), level: 3 });
+            new kakao.maps.services.Geocoder().addressSearch(a, (res, stat) => {
+                if (stat === kakao.maps.services.Status.OK) {
+                    const pos = new kakao.maps.LatLng(res[0].y, res[0].x); m.setCenter(pos);
+                    new kakao.maps.CustomOverlay({ 
+                        position: pos, 
+                        content: `<div style="background:white; padding:5px 12px; border:2px solid var(--chance-blue); border-radius:15px; font-weight:bold; font-size:0.8rem; color:var(--chance-blue);">${p || '매물'}</div>`, 
+                        yAnchor: 1.3 
+                    }).setMap(m);
+                }
+            });
+        }
+
+        const tid = getParam('id');
+        fetch('data/listings.json' + '?t=' + new Date().getTime()).then(r => r.json()).then(res => {
+            const data = res.listings || [];
+            const item = data[tid];
+            if(item) {
+                item.id = tid;
+                renderDetail(item);
+            } else {
+                document.getElementById('detail-container').innerHTML = '<div style="padding:100px; text-align:center; color:#888;">존재하지 않는 매물입니다.</div>';
+            }
+        });
+
+        function renderDetail(item) {
+            const imgs = getAllImages(item.images || item.image);
+            const imgsHtml = imgs.map(u => `<div class="img-item"><img src="${u}" onerror="this.src='bg.jpg'" referrerpolicy="no-referrer"></div>`).join('');
+            
+            document.getElementById('detail-container').innerHTML = `
+                <div class="gallery-wrapper">
+                    <button class="nav-btn prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="img-container">${imgsHtml}</div>
+                    <button class="nav-btn next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <div class="content">
+                    <span class="category-badge">${item.category || '매물'}</span>
+                    <h1 class="title">${item.title}</h1>
+                    <div class="price">${item.price || '가격문의'}</div>
+                    <div class="info-grid">
+                        ${['소재지:address_short', '용도:bld_usage', '계약면적:area_contract', '전용면적:area_exclusive', '층수:floor_info', '방향:direction', '주차:parking', '사용승인:approval_date', '관리비:maintenance_fee', '입주가능:movein_date', '화장실:restroom', '승강기:elevator'].map(f => {
+                            const [l, k] = f.split(':'); return `<div class="info-item"><span>${l}</span> ${item[k] || '-'}</div>`;
+                        }).join('')}
+                    </div>
+                    <div class="desc-wrapper" id="desc-container">
+                        <div class="desc-content" id="desc-content">${item.description || '상세 설명이 없습니다.'}</div>
+                        <div class="desc-gradient" id="desc-gradient"></div>
+                        <button class="more-btn" id="more-toggle" onclick="toggleDesc()">상세 설명 더보기 v</button>
+                    </div>
+                    <h3 style="margin-bottom:15px; font-weight:800;"><i class="fa-solid fa-location-dot"></i> 매물 위치</h3>
+                    <div id="detail-map"></div>
+                    ${item.blog_url ? `<a href="${item.blog_url}" target="_blank" class="blog-btn">네이버 블로그에서 더 보기</a>` : ''}
+                </div>`;
+
+            const c = document.getElementById('desc-content'); 
+            if (c && c.scrollHeight <= 250) { 
+                document.getElementById('more-toggle').style.display = 'none'; 
+                document.getElementById('desc-gradient').style.display = 'none'; 
+            }
+            if(item.address) initDetailMap(item.address, item.price);
+        }
+    </script>
+</body>
+</html>

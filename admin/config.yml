@@ -1,0 +1,41 @@
+backend:
+  name: github
+  repo: chance-real/Chance-home_DEVing
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "listings"
+    label: "매물 관리"
+    files:
+      - file: "data/listings.json"
+        name: "listings"
+        label: "전체 매물 리스트"
+        fields:
+          - name: "listings"
+            label: "매물 목록"
+            widget: "list"
+            fields:
+              - {label: "제목 (예: 고운동 34평 로얄동)", name: "title", widget: "string"}
+              - {label: "카테고리", name: "category", widget: "select", options: ["아파트", "상가", "토지", "기타"]}
+              - {label: "거래 종류", name: "status", widget: "select", options: ["매매", "임대", "거래완료"]}
+              - {label: "가격 (매매가 또는 전세가/월세 정보)", name: "price", widget: "string", required: false, hint: "예: 5억 8천 또는 보증금 5,000만 / 월세 250만"}
+              - {label: "대표 사진 / 이미지 목록", name: "image", widget: "image", hint: "첫 번째 메인 사진입니다."}
+              - {label: "추가 사진들 (선택)", name: "images", widget: "text", required: false, hint: "여러 장일 경우 줄바꿈(Enter)으로 이미지 주소를 입력하세요."}
+              - {label: "상세 설명", name: "description", widget: "text"}
+              - {label: "전체 주소 (지도 표시용)", name: "address", widget: "string", required: false, hint: "예: 세종특별자치시 고운동 2091"}
+              - {label: "축약 주소 / 지역", name: "address_short", widget: "string", required: false, hint: "예: 고운동"}
+              - {label: "건물 용도", name: "bld_usage", widget: "string", required: false, hint: "예: 제1종근생, 주거용"}
+              - {label: "계약면적", name: "area_contract", widget: "string", required: false}
+              - {label: "전용면적", name: "area_exclusive", widget: "string", required: false}
+              - {label: "층수 정보", name: "floor_info", widget: "string", required: false, hint: "예: 1층, 로얄층"}
+              - {label: "방향", name: "direction", widget: "string", required: false, hint: "예: 남향"}
+              - {label: "주차 대수", name: "parking", widget: "string", required: false}
+              - {label: "사용승인일", name: "approval_date", widget: "string", required: false}
+              - {label: "관리비", name: "maintenance_fee", widget: "string", required: false}
+              - {label: "입주가능일", name: "movein_date", widget: "string", required: false}
+              - {label: "화장실", name: "restroom", widget: "string", required: false}
+              - {label: "승강기 유무", name: "elevator", widget: "string", required: false}
+              - {label: "네이버 블로그 링크 URL", name: "blog_url", widget: "string", required: false}
