@@ -2,10 +2,8 @@ backend:
   name: github
   repo: chance-real/chance-test
   branch: main
-  use_pkce: true # 안전 로그인 기능 켜기
-  app_id: "Ov23liFKSYNOm0Yllhrw"
+  base_url: "https://cute-yeot-748f48.netlify.app"
 
-# (이 아래에 있는 media_folder, collections 등 기존 코드들은 절대 지우지 말고 그대로 둡니다!)
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
