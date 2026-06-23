@@ -3,287 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>찬스부동산 - 매물 목록</title>
-    <!-- 카카오맵 API (자신의 앱 키로 변경 필요) -->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_KAKAO_MAP_API_KEY&libraries=services"></script>
+    <meta name="description" content="세종시 찬스부동산. 아파트, 상가, 사무실, 토지 전문 중개. 여러분의 찬스메이커가 되겠습니다.">
+    <meta property="og:title" content="찬스부동산 - 세종시 고운뜰7길9">
+    <meta property="og:image" content="bg.jpg">
+    <title>찬스부동산 - 세종시 고운뜰7길9</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-        }
+        /* ================= 원본 스타일 100% 유지 ================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { font-family: 'Noto Sans KR', sans-serif; color: #333; line-height: 1.6; background-color: #fcfcfc; }
+        
+        a { text-decoration: none; color: inherit; }
+        
+        /* 포인트 컬러 */
+        :root { --chance-blue: #2980b9; --chance-dark: #2c3e50; }
 
-        body {
-            background-color: #f8f9fa;
-            color: #333;
-        }
-
+        /* ================= 1. 헤더 & 네비게이션 ================= */
         header {
-            background-color: #ffffff;
-            border-bottom: 1px solid #e9ecef;
-            padding: 15px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; border-bottom: 1px solid #eee;
+            background-color: rgba(255, 255, 255, 0.95);
+            position: sticky; top: 0; z-index: 1000;
+            backdrop-filter: blur(5px);
         }
 
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-            color: #1a73e8;
-            text-decoration: none;
+        .logo img { height: 60px; width: auto; } 
+
+        .nav-menu { display: flex; gap: 20px; font-weight: 700; font-size: 1rem; align-items: center; }
+        
+        .nav-menu a { 
+            transition: color 0.3s; 
+            color: #555; 
+            display: flex; align-items: center; 
+            gap: 4px; 
+        }
+        .nav-menu a:hover { color: var(--chance-blue); }
+
+        .nav-icon { height: 20px; width: auto; vertical-align: middle; position: relative; top: -1px; }
+
+        /* 프리미엄 매물관 버튼 스타일 */
+        .btn-premium {
+            color: var(--chance-dark) !important;
+            border: 2px solid var(--chance-dark);
+            padding: 8px 15px; border-radius: 20px;
+        }
+        .btn-premium:hover {
+            background-color: var(--chance-dark); color: white !important;
         }
 
-        nav a {
-            margin-left: 20px;
-            text-decoration: none;
-            color: #495057;
-            font-weight: 500;
+        .btn-register {
+            background-color: var(--chance-blue); color: white !important;
+            padding: 10px 20px; border-radius: 5px;
+            gap: 6px; 
         }
+        .btn-register:hover { background-color: #1c6ea4; }
 
-        nav a:hover, nav a.active {
-            color: #1a73e8;
+        /* ================= 2. 메인 배너 ================= */
+        .hero { 
+            padding: 140px 5%;
+            background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid #eee;
         }
+        
+        .hero-subtitle { color: var(--chance-blue); font-weight: 700; margin-bottom: 20px; display: block; }
+        
+        .hero h1 { font-size: 3.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 30px; color: #111; }
+        .hero h1 span { color: var(--chance-blue); }
+        .hero p { font-size: 1.1rem; color: #444; max-width: 600px; margin-bottom: 0; font-weight: 500; }
 
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
+        /* ================= 3. 인사말 섹션 ================= */
+        .greeting-section { background-color: #fff; padding: 80px 5%; text-align: center; }
+        .greeting-box {
+            max-width: 800px; margin: 0 auto; background: white; padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            text-align: left;
+            border: 1px solid #f0f0f0;
         }
-
-        .filter-section {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
+        .greeting-box h2 {
+            font-size: 1.8rem; margin-bottom: 20px; color: var(--chance-dark);
+            border-bottom: 3px solid var(--chance-blue); display: inline-block; padding-bottom: 10px;
         }
+        
+        .greeting-box p { margin-bottom: 15px; color: #333; line-height: 1.8; font-size: 1.05rem; }
+        
+        .service-list { margin-top: 20px; background-color: #f8fbff; padding: 25px; border-radius: 15px; }
+        .service-list li { list-style: none; margin-bottom: 10px; font-weight: 600; color: #2c3e50; }
+        .service-list li::before { content: "✔ "; color: var(--chance-blue); margin-right: 5px;}
 
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
+        /* ================= 4. 서비스 카드 ================= */
+        .features { padding: 100px 5%; background-color: #f9f9f9; }
+        .scroll-reveal { opacity: 0; transform: translateY(50px); transition: all 1s ease-out; }
+        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+        
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .card { 
+            padding: 40px 30px; 
+            background: white;
+            border: 1px solid #eee; border-radius: 15px; transition: 0.3s; text-align: center; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
         }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-color: var(--chance-blue); }
+        .card-icon { font-size: 3.5rem; margin-bottom: 20px; }
+        .card h3 { font-size: 1.5rem; margin-bottom: 10px; color: #2c3e50;}
+        .card p { color: #777; font-size: 0.95rem; }
 
-        .filter-group label {
-            font-size: 12px;
-            color: #868e96;
-            font-weight: 600;
+        /* ================= 5. 하단 푸터 ================= */
+        footer { background-color: var(--chance-dark); color: #ecf0f1; padding: 60px 5%; font-size: 0.95rem; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; }
+        .footer-left h2 { font-size: 1.8rem; margin-bottom: 20px; color: white; }
+        .footer-info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px 30px; }
+        .footer-item strong { color: #bdc3c7; font-weight: 400; display: inline-block; width: 80px; }
+        .footer-item a { color: white; border-bottom: 1px dotted #7f8c8d; }
+        .copyright { margin-top: 40px; padding-top: 20px; border-top: 1px solid #34495e; color: #7f8c8d; font-size: 0.85rem; }
+
+        /* ================= 6. 우측 하단 고정 QR코드 ================= */
+        .fixed-qr {
+            position: fixed; bottom: 30px; right: 30px; z-index: 100;
+            background: white; padding: 15px; border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15); text-align: center; border: 1px solid #e0e0e0;
         }
+        .fixed-qr img { width: 120px; height: auto; display: block; margin-bottom: 8px; }
+        .fixed-qr p { font-size: 0.9rem; color: var(--chance-dark); font-weight: 700; margin: 0; }
 
-        .filter-group select {
-            padding: 8px 12px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            background-color: #fff;
-            min-width: 120px;
-        }
-
-        .listings-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .card {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            overflow: hidden;
-            transition: transform 0.2s;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background-color: #e9ecef;
-        }
-
-        .card-body {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .badge-group {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-
-        .badge {
-            padding: 3px 8px;
-            font-size: 11px;
-            font-weight: bold;
-            border-radius: 3px;
-        }
-
-        .badge-status { background: #e3f2fd; color: #0d47a1; }
-        .badge-category { background: #f1f3f5; color: #495057; }
-
-        .card-price {
-            font-size: 22px;
-            font-weight: bold;
-            color: #212529;
-            margin-bottom: 5px;
-        }
-
-        .card-title {
-            font-size: 15px;
-            font-weight: 500;
-            color: #495057;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .card-address {
-            font-size: 13px;
-            color: #868e96;
-            margin-top: auto;
-        }
-
-        footer {
-            background: #fff;
-            border-top: 1px solid #e9ecef;
-            padding: 30px 20px;
-            text-align: center;
-            font-size: 13px;
-            color: #868e96;
-            margin-top: 60px;
-        }
-
-        .no-data {
-            text-align: center;
-            padding: 5px;
-            grid-column: 1 / -1;
-            color: #868e96;
+        /* 모바일 최적화 미디어 쿼리 */
+        @media (max-width: 768px) {
+            header { position: relative; flex-direction: column; padding: 10px 5%; gap: 15px; } 
+            .logo img { height: 45px; }
+            .nav-menu { 
+                display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; font-size: 0.8rem;
+            }
+            .nav-menu a { 
+                justify-content: center; background: #fff; border: 1px solid #eee; padding: 10px 5px; border-radius: 8px; 
+                white-space: nowrap; 
+            }
+            .btn-register { grid-column: 1 / -1; order: -1; width: 100%; justify-content: center; background-color: var(--chance-blue) !important; }
+            .btn-premium { grid-column: 1 / -1; order: -2; background: #f8fbff !important; margin: 0; }
+            
+            .hero h1 { 
+                font-size: 2.2rem; 
+                word-break: keep-all; 
+            }
+            .hero h1 span {
+                display: inline-block; 
+            }
+            
+            .footer-info-grid { grid-template-columns: 1fr; }
+            .fixed-qr { bottom: 10px; right: 10px; padding: 10px; }
+            .fixed-qr img { width: 90px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="#" class="logo">찬스부동산</a>
-        <nav>
-            <a href="#" class="active">매물목록</a>
-            <a href="map.html">지도보기</a>
+        <div class="logo">
+            <a href="index.html"><img src="logo.jpg" alt="찬스부동산"></a>
+        </div>
+        <nav class="nav-menu">
+            <a href="listings.html" class="btn-premium">💎 프리미엄 매물관</a>
+
+            <a href="https://www.youtube.com/@이호재-u3l" target="_blank"><img src="Youtube_logo.png" alt="유튜브" class="nav-icon">유튜브</a>
+            
+            <a href="https://sp.zigbang.com/share/store/908559?userNo=&stamp=260111211445" target="_blank">
+                <img src="zigbang.png" alt="직방" class="nav-icon">직방 매물(상가, 사무실)
+            </a>
+
+            <a href="https://m.blog.naver.com/PostList.naver?blogId=chance4953&tab=1" target="_blank">
+                <img src="naverblog-logo.jpg" alt="블로그" class="nav-icon">네이버 블로그 매물
+            </a>
+
+            <a href="https://naver.me/FhfVyegj" target="_blank"><img src="navermap.webp" alt="오시는 길" class="nav-icon">오시는 길</a>
+            
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScsjftj28uaaFnGJbopfBkk1lZ_nl-XKub33LJqyc_Wdhy8sA/viewform?usp=header" target="_blank" class="btn-register">⚡ 매물 접수</a>
         </nav>
     </header>
 
-    <div class="container">
-        <!-- 필터 섹션 -->
-        <div class="filter-section">
-            <div class="filter-group">
-                <label>매물 종류</label>
-                <select id="filter-category" onchange="renderListings()">
-                    <option value="all">전체</option>
-                    <option value="아파트">아파트</option>
-                    <option value="상가">상가</option>
-                    <option value="토지">토지</option>
-                    <option value="기타">기타</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label>거래 유형</label>
-                <select id="filter-status" onchange="renderListings()">
-                    <option value="all">전체</option>
-                    <option value="매매">매매</option>
-                    <option value="임대">임대</option>
-                    <option value="거래완료">거래완료</option>
-                </select>
-            </div>
-        </div>
+    <section class="hero">
+        <span class="hero-subtitle">▶ Chance: 어떤 일을 하는 데에 가장 좋은 시기나 경우</span>
+        <h1>행복도시 세종,<br>여러분들의 <span>찬스메이커</span>가<br>되겠습니다.</h1>
+        <p>찬스부동산은 단순한 중개를 넘어 여러분의 일상이 행복해질 수 있도록 최고의 기회를 만들어 드립니다. 세종시에서의 새로운 시작, 저희와 함께하세요.</p>
+    </section>
 
-        <!-- 매물 카드 격자 -->
-        <div class="listings-grid" id="listings-container">
-            <div class="no-data">매물을 불러오는 중입니다...</div>
+    <section class="greeting-section">
+        <div class="greeting-box">
+            <h2>안녕하세요, 찬스부동산입니다.</h2>
+            
+            <p>
+                안녕하세요^^ 고운동에 위치한 찬스부동산입니다.<br>
+                <strong>내가 살 집, 내가 운영할 매장, 내가 일할 사무실</strong>이라는 마음으로 함께 하겠습니다.<br>
+                궁금하신 부분은 편하게 말씀주세요~
+            </p>
+
+            <p>
+                고객님의 소중한 자산, 언제나 정직하게 함께하겠습니다.<br>
+                필요하실 때 꼭 한 번 연락주세요.
+            </p>
+
+            <ul class="service-list">
+                <li>국토부 전자계약 회원업소 (편리한 계약 진행)</li>
+                <li>아파트 / 단독주택 / 오피스텔 / 원룸 (임대·매매)</li>
+                <li>상가 / 사무실 (상권분석·창업)</li>
+                <li>기존 사업장 양수도 중개</li>
+            </ul>
         </div>
-    </div>
+    </section>
+
+    <section class="features scroll-reveal">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h2 style="font-size: 2rem; font-weight: 900; color: #2c3e50;">전문 중개 분야</h2>
+            <p style="color: #7f8c8d;">고객님의 소중한 자산, 전문가에게 맡기세요.</p>
+        </div>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">🏠</div>
+                <h3>주거용 부동산</h3>
+                <p>아파트, 단독주택, 원룸 등<br>라이프스타일에 맞는 보금자리 추천</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🏢</div>
+                <h3>상업용 부동산</h3>
+                <p>성공 창업을 위한 상권 분석<br>상가, 사무실 임대 및 매매</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🤝</div>
+                <h3>양수도 / 권리금</h3>
+                <p>복잡한 권리 관계 분석<br>안전하고 투명한 계약 진행</p>
+            </div>
+        </div>
+    </section>
 
     <footer>
-        <p>© 2026 찬스부동산 공인중개사사무소 | 대표: 홍길동</p>
-        <p style="margin-top: 5px;">주소: 세종특별자치시 고운동 | 연락처: 044-000-0000 
-           <!-- ⭐ 이 자물쇠 경로를 테스트 주소에 맞게 변경 완료했습니다 ⭐ -->
-           <a href="/chance-test/admin/" style="color: #868e96; margin-left: 10px; text-decoration: none;" title="관리자 로그인">🔒</a>
-        </p>
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2>찬스부동산공인중개사사무소</h2>
+                <div class="footer-info-grid">
+                    <div class="footer-item"><strong>대표</strong> 이 호 재</div>
+                    <div class="footer-item"><strong>등록번호</strong> 36110-2025-00048</div>
+                    <div class="footer-item"><strong>휴대전화</strong> <a href="tel:010-2357-6915">010-2357-6915</a></div>
+                    <div class="footer-item"><strong>Tel</strong> <a href="tel:044-864-4953">044. 864. 4953</a></div>
+                    <div class="footer-item"><strong>Fax</strong> 044. 864. 4958</div>
+                    <div class="footer-item"><strong>E-mail</strong> <a href="mailto:hjl6915@daum.net">hjl6915@daum.net</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>주소: 세종시 고운뜰7길9 더리치빌딩 109호</p>
+            <p>
+                &copy; 2026 Chance Real Estate. All rights reserved.
+                <a href="/chance-test/admin/" style="color: #555; margin-left: 10px; text-decoration: none;" title="관리자 로그인">🔒</a>
+            </p>
+        </div>
     </footer>
 
+    <div class="fixed-qr">
+        <img src="qrcode.jpg" alt="매물 접수 QR코드">
+        <p>간편 매물 접수</p>
+    </div>
+
     <script>
-        let allListings = [];
-
-        // 1. JSON 데이터 가져오기
-        async function fetchListings() {
-            try {
-                const response = await fetch('data/listings.json');
-                const data = await response.json();
-                allListings = data.listings || [];
-                renderListings();
-            } catch (error) {
-                console.error("매물 데이터를 가져오는데 실패했습니다:", error);
-                document.getElementById('listings-container').innerHTML = '<div class="no-data">데이터를 불러오지 못했습니다.</div>';
+        window.addEventListener('scroll', function() {
+            var revealElement = document.querySelector('.scroll-reveal');
+            if(revealElement) {
+                var windowHeight = window.innerHeight;
+                var elementTop = revealElement.getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    revealElement.classList.add('visible');
+                }
             }
-        }
-
-        // 2. 화면에 매물 리스트 그리기 (필터 포함)
-        function renderListings() {
-            const container = document.getElementById('listings-container');
-            const categoryFilter = document.getElementById('filter-category').value;
-            const statusFilter = document.getElementById('filter-status').value;
-
-            // 필터링 적용
-            const filteredListings = allListings.filter(item => {
-                const matchCategory = (categoryFilter === 'all' || item.category === categoryFilter);
-                const matchStatus = (statusFilter === 'all' || item.status === statusFilter);
-                return matchCategory && matchStatus;
-            });
-
-            if (filteredListings.length === 0) {
-                container.innerHTML = '<div class="no-data">조건에 맞는 매물이 없습니다.</div>';
-                return;
-            }
-
-            // 카드 HTML 생성
-            container.innerHTML = filteredListings.map((item, index) => {
-                // 원본 listings.json에서 인덱스를 찾기 위한 로직
-                const originalIndex = allListings.findIndex(allItem => allItem === item);
-                
-                return `
-                    <a href="detail.html?id=${originalIndex}" class="card">
-                        <img src="${item.image || 'images/default.jpg'}" alt="${item.title}" class="card-img" onerror="this.src='https://via.placeholder.com/400x300?text=No+Image'">
-                        <div class="card-body">
-                            <div class="badge-group">
-                                <span class="badge badge-status">${item.status}</span>
-                                <span class="badge badge-category">${item.category}</span>
-                            </div>
-                            <div class="card-price">${item.price}</div>
-                            <div class="card-title">${item.title}</div>
-                            <div class="card-address">${item.address_short || item.address || ''}</div>
-                        </div>
-                    </a>
-                `;
-            }).join('');
-        }
-
-        // 페이지 로드 시 실행
-        window.onload = fetchListings;
+        });
     </script>
 </body>
 </html>
