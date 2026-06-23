@@ -2,10 +2,10 @@ backend:
   name: github
   repo: chance-real/chance-test
   branch: main
-  base_url: "https://cute-yeot-748f48.netlify.app"
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
+# (이하 생략 - 기존 매물 코드 유지)
 
 collections:
   - name: "listings"
